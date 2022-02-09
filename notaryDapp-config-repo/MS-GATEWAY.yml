@@ -1,0 +1,39 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: MS-GATEWAY
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: ms-main
+          uri: http://localhost:8082
+          predicates:
+            - Path=/ms-main/**
+          filters:
+            - RewritePath=/ms-main(?<segment>/?.*), $\{segment}
+        - id: ms-auth
+          uri: http://localhost:8081
+          predicates:
+            - Path=/ms-auth/**
+          filters:
+            - RewritePath=/ms-auth(?<segment>/?.*), $\{segment}
+        - id: ms-eth
+          uri: http://localhost:8083
+          predicates:
+            - Path=/ms-eth/**
+          filters:
+            - RewritePath=/ms-eth(?<segment>/?.*), $\{segment}
+
+eureka:
+  instance:
+    prefer-ip-address: true

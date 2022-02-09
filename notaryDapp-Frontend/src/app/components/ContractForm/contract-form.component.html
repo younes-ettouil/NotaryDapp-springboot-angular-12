@@ -1,0 +1,550 @@
+<div class="wrapper">
+    <div class="page-header page-header-xs" data-parallax="true"
+        style="background-image: url('../../../assets/img/bg.png');">
+        <div class="filter"></div>
+    </div>
+    <div class="section profile-content">
+        <div class="container">
+            <div class="owner">
+                <div class="avatar">
+                    <img src="https://st2.depositphotos.com/3169803/7666/v/600/depositphotos_76669763-stock-illustration-template-vector-logo-for-legal.jpg"
+                        alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                </div>
+            </div>
+            <br />
+            <div>
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <p class="modal-title">ERR MESSAGE</p>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mb-4  text-center text-danger">
+                        <h4>{{messageErr}}</h4>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+            </div>
+
+            <div class="container text-center">
+                <div class="tim-title">
+                    <h2>Contrat Formulaire</h2>
+                </div>
+            </div>
+
+            <div>
+
+                <div class="container" #event>
+                    <div>
+                        <div class="tim-title ml-4" *ngIf="!next">
+                            <h5>Contract</h5>
+                        </div>
+
+                        <div class="row" *ngIf="!next">
+                            <hr />
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Type of contract (*)</label>
+                                    <select [(ngModel)]="contract.type" class="col-lg-8 form-control">
+                                        <option value="" [selected]="">
+                                            --Choose the type of contract--
+                                        </option>
+                                        <option value="SELL">SELL</option>
+                                        <option value="BORROW">BORROW</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Price (*)</label>
+                                    <input [(ngModel)]="contract.price" type="text" class="col-lg-8 form-control"
+                                        placeholder="Price" />
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Payment method (*)</label>
+                                    <select [(ngModel)]="contract.paymentMethod" class="col-lg-8 form-control">
+                                        <option value="" [selected]="">
+                                            --Choose the Payment method--
+                                        </option>
+                                        <option value="BANK">BANK</option>
+                                        <option value="CASH">CASH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 ml-4">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Type of Property(*)</label>
+                                    <select [(ngModel)]="contract.property.type" class="col-lg-8 form-control">
+                                        <option value="" [selected]="">--Choose the property Type--</option>
+                                        <option value="APARTMENT">APARTMENT</option>
+                                        <option value="HOUSE">HOUSE</option>
+                                        <option value="FIELD">FIELD</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Conservation Number (*)</label>
+                                    <input [(ngModel)]="contract.property.conservationNumber" type="text"
+                                        class="col-lg-8 form-control" placeholder="Conservation Number" />
+                                </div>
+
+                                <div class="form-check row">
+                                    <label class="col-lg-4 col-form-label">Taxes</label>
+                                    <label class="form-check-label">
+                                        <input [(ngModel)]="contract.property.taxesFree" class="form-check-input"
+                                            type="checkbox" value="true" />
+                                        Free
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Surface (*) </label>
+                                    <input [(ngModel)]="contract.property.surface" type="text"
+                                        class="col-lg-8 form-control" placeholder="Default" />
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Address (*)</label>
+                                    <input [(ngModel)]="contract.property.address.address" type="text"
+                                        class="col-lg-4 ml-lg-3 form-control" placeholder="address" />
+                                    <input [(ngModel)]="contract.property.address.city" type="text"
+                                        class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                    <input [(ngModel)]="contract.property.address.country" type="text"
+                                        class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                </div>
+                            </div>
+                            <div class="text-center"></div>
+                        </div>
+                        <hr />
+                        <div class="row" *ngIf="!next2 && next">
+                            <div class="tim-title col-lg-5 m-4">
+                                <h5>Seller Information</h5>
+                            </div>
+                            <div class="tim-title col-lg-5 mt-4 ml-5" *ngIf="typeClient == 2">
+                                <h5>representative Information</h5>
+                            </div>
+                        </div>
+
+                        <ul *ngIf="!next2 && next">
+                            <li class="row" *ngFor="let row of sellersArray; let i = index; let last = last"
+                                [attr.data-index]="i">
+                                <div class="col-6" *ngIf="last && typeClient == 1">
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Full Name (*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].fullNAme"
+                                            class="col-lg-8 form-control" placeholder="Full Name" />
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Phone (*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].phone"
+                                            class="col-lg-8 form-control" placeholder="Phone" />
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">Address (*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].address.address"
+                                            class="col-lg-4 ml-lg-3 form-control" placeholder="address" />
+                                        <input type="text" [(ngModel)]="contract.sellers[i].address.city"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                        <input type="text" [(ngModel)]="contract.sellers[i].address.country"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                    </div>
+
+
+                                    <div class="form-check-radio row">
+                                        <label class="col-lg-8 col-form-label">Gender</label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input" [(ngModel)]="contract.sellers[i].gender"
+                                                type="radio" name="exampleRadios" id="exampleRadios1" value="M" />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input" [(ngModel)]="contract.sellers[i].gender"
+                                                type="radio" name="exampleRadios" id="exampleRadios2" value="F" />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">IdentityDoc </label>
+                                        <select [(ngModel)]="contract.sellers[i].identityDoc"
+                                            class="col-lg-3 form-control">
+                                            <option value="CIN" [selected]="">CIN</option>
+                                            <option value="CR">CR</option>
+                                            <option value="CI">CI</option>
+
+                                        </select>
+                                        <label class="col-lg-3 col-form-label">IdentityCode (*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].identityCode"
+                                            class="col-lg-3 form-control" placeholder="KB00000" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">Nationality(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].nationality"
+                                            class="col-lg-9 form-control" placeholder="Nationality" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Date birthday</label>
+                                        <input type="date" [(ngModel)]="contract.sellers[i].birthday"
+                                            class="col-lg-7 form-control" placeholder="Date birthday" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Place of Birthday</label>
+                                        <input [(ngModel)]="contract.sellers[i].placeOfBirth" type="text"
+                                            class="col-lg-7 form-control" placeholder="place of Birthday" />
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="last && typeClient == 1"></div>
+                                <div class="col-5" *ngIf="last && typeClient == 2">
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Address(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].address.address"
+                                            class="col-lg-5 ml-lg-3 form-control" placeholder="address" />
+                                        <input type="text" [(ngModel)]="contract.sellers[i].address.city"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                        <input type="text" [(ngModel)]="contract.sellers[i].address.country"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Phone(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].phone"
+                                            class="col-lg-8 form-control" placeholder="Phone" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Trade Registry(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].tradeRegistry"
+                                            class="col-lg-8 form-control" placeholder="Trade Registry" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">head Office(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].headOffice"
+                                            class="col-lg-8 form-control" placeholder="head Office" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Capital(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].capital"
+                                            class="col-lg-8 form-control" placeholder="Capital" />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 ml-4" *ngIf="last && typeClient == 2">
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Address(*)</label>
+                                        <input type="text"
+                                            [(ngModel)]="contract.sellers[i].representative.address.address"
+                                            class="col-lg-5 ml-lg-3 form-control" placeholder="address" />
+                                        <input type="text" [(ngModel)]="contract.sellers[i].representative.address.city"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                        <input type="text"
+                                            [(ngModel)]="contract.sellers[i].representative.address.country"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Phone(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].representative.phone"
+                                            class="col-lg-8 form-control" placeholder="Phone" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Full Name(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].representative.fullNAme"
+                                            class="col-lg-8 form-control" placeholder="Full Name" />
+                                    </div>
+
+                                    <div class="form-check-radio row">
+                                        <label class="col-lg-8 col-form-label">Gender</label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input"
+                                                [(ngModel)]="contract.sellers[i].representative.gender" type="radio"
+                                                name="exampleRadios" id="exampleRadios1" value="M" />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input"
+                                                [(ngModel)]="contract.sellers[i].representative.gender" type="radio"
+                                                name="exampleRadios" id="exampleRadios2" value="F" />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">IdentityDoc(*)</label>
+                                        <select [(ngModel)]="contract.sellers[i].representative.identityDoc"
+                                            class="col-lg-3 form-control">
+                                            <option value="CIN" [selected]="">CIN</option>
+                                            <option value="CR">CR</option>
+                                            <option value="CI">CI</option>
+
+                                        </select>
+                                        <label class="col-lg-3 col-form-label">IdentityCode</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].representative.identityCode"
+                                            class="col-lg-3 form-control" placeholder="KB00000" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">Nationality(*)</label>
+                                        <input type="text" [(ngModel)]="contract.sellers[i].presentative.nationality"
+                                            class="col-lg-9 form-control" placeholder="Nationality" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Date birthday</label>
+                                        <input type="date" [(ngModel)]="contract.sellers[i].presentative.birthday"
+                                            class="col-lg-7 form-control" placeholder="Date Birthday" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Place of Birthday</label>
+                                        <input type="text" class="col-lg-7 form-control"
+                                            [(ngModel)]="contract.sellers[i].presentative.placeOfBirth"
+                                            placeholder="Place Of Birthday" />
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="row" *ngIf="!next2 && next">
+                            <div class="col-lg-3"></div>
+
+                            <button (click)="addRowSeller(1)" class="btn btn-default col-lg-2 ml-4">
+                                Add Custumer
+                            </button>
+                            <button (click)="addRowSeller(2)" class="btn btn-default col-lg-2 ml-4">
+                                Add Entreprise
+                            </button>
+                            <div class="col-lg-3"></div>
+                        </div>
+
+                        <div class="row" *ngIf="next2">
+                            <div class="tim-title col-lg-5 m-4">
+                                <h5>Buyer Information</h5>
+                            </div>
+                            <div class="tim-title col-lg-5 mt-4 ml-5" *ngIf="typeClient == 2">
+                                <h5>representative Information</h5>
+                            </div>
+                        </div>
+                        <ul *ngIf="next2">
+                            <li class="row" *ngFor="let row of buyersArray; let i = index; let last = last"
+                                [attr.data-index]="i">
+                                <div class="col-6" *ngIf="last && typeClient == 1">
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">wallet(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].wallet"
+                                            class="col-lg-8 form-control" placeholder="Wallet of Buyer" required />
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Full Name (*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].fullNAme"
+                                            class="col-lg-8 form-control" placeholder="Full Name" />
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Phone(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].phone"
+                                            class="col-lg-8 form-control" placeholder="Phone" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Address(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].address.address"
+                                            class="col-lg-5 ml-lg-3 form-control" placeholder="address" />
+                                        <input type="text" [(ngModel)]="contract.buyers[i].address.city"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                        <input type="text" [(ngModel)]="contract.buyers[i].address.country"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                    </div>
+
+                                    <div class="form-check-radio row">
+                                        <label class="col-lg-8 col-form-label">Gender</label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input" [(ngModel)]="contract.buyers[i].gender"
+                                                type="radio" name="exampleRadios" id="exampleRadios1" value="M" />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input" [(ngModel)]="contract.buyers[i].gender"
+                                                type="radio" name="exampleRadios" id="exampleRadios2" value="F" />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">IdentityDoc (*)</label>
+                                        <select [(ngModel)]="contract.buyers[i].identityDoc"
+                                            class="col-lg-3 form-control">
+                                            <option value="CIN" [selected]="">CIN</option>
+                                            <option value="CR">CR</option>
+                                            <option value="CI">CI</option>
+
+                                        </select>
+                                        <label class="col-lg-3 col-form-label">IdentityCode</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].identityCode"
+                                            class="col-lg-3 form-control" placeholder="KB00000" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">Nationality(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].nationality"
+                                            class="col-lg-9 form-control" placeholder="Nationality" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Date birthday</label>
+                                        <input type="date" [(ngModel)]="contract.buyers[i].birthday"
+                                            class="col-lg-7 form-control" placeholder="Date of Bithday" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Place of Birthday</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].placeOfBirth"
+                                            class="col-lg-7 form-control" placeholder="Place Of Birthday" />
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="last && typeClient == 1"></div>
+                                <div class="col-5" *ngIf="last && typeClient == 2">
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">wallet(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].wallet"
+                                            class="col-lg-8 form-control" placeholder="Wallet of Buyer" required />
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Address(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].address.address"
+                                            class="col-lg-5 ml-lg-3 form-control" placeholder="address" />
+                                        <input type="text" [(ngModel)]="contract.buyers[i].address.city"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                        <input type="text" [(ngModel)]="contract.buyers[i].address.country"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Phone(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].phone"
+                                            class="col-lg-8 form-control" placeholder="Phone" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Trade Registry(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].tradeRegistry"
+                                            class="col-lg-8 form-control" placeholder="Trade registry" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Head Office(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].headOffice"
+                                            class="col-lg-8 form-control" placeholder="Head Office" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Capital(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].capital"
+                                            class="col-lg-8 form-control" placeholder="Capital" />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 ml-4" *ngIf="last && typeClient == 2">
+                                    <div class="form-group row">
+                                        <label class="col-lg-2 col-form-label">Address(*)</label>
+                                        <input type="text"
+                                            [(ngModel)]="contract.buyers[i].representative.address.address"
+                                            class="col-lg-5 ml-lg-3 form-control" placeholder="address" />
+                                        <input type="text" [(ngModel)]="contract.buyers[i].representative.address.city"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="city" />
+                                        <input type="text"
+                                            [(ngModel)]="contract.buyers[i].representative.address.country"
+                                            class="col-lg-2 ml-lg-2 form-control" placeholder="country" />
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Phone(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].representative.phone"
+                                            class="col-lg-8 form-control" placeholder="Phone" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label">Full Name(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].representative.fullNAme"
+                                            class="col-lg-8 form-control" placeholder="Full Name" />
+                                    </div>
+
+                                    <div class="form-check-radio row">
+                                        <label class="col-lg-8 col-form-label">Gender</label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input"
+                                                [(ngModel)]="contract.buyers[i].representative.gender" type="radio"
+                                                name="exampleRadios" id="exampleRadios1" value="M" />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                        <label class="form-check-label mt-1 col-lg-2">
+                                            <input class="form-check-input"
+                                                [(ngModel)]="contract.buyers[i].representative.gender" type="radio"
+                                                name="exampleRadios" id="exampleRadios2" value="F" />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">IdentityDoc(*)</label>
+                                        <select [(ngModel)]="contract.buyers[i].representative.identityDoc"
+                                            class="col-lg-3 form-control">
+                                            <option value="CIN" [selected]="">CIN</option>
+                                            <option value="CR">CR</option>
+                                            <option value="CI">CI</option>
+
+                                        </select>
+                                        <label class="col-lg-3 col-form-label">IdentityCode</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].representative.identityCode"
+                                            class="col-lg-3 form-control" placeholder="K000" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label">Nationality(*)</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].representative.nationality"
+                                            class="col-lg-9 form-control" placeholder="Nationality" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Date birthday</label>
+                                        <input type="date" [(ngModel)]="contract.buyers[i].representative.birthday"
+                                            class="col-lg-7 form-control" placeholder="Date Birthday" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-5 col-form-label">Place of Birthday</label>
+                                        <input type="text" [(ngModel)]="contract.buyers[i].representative.placeOfBirth"
+                                            class="col-lg-7 form-control" placeholder="Place of Birthday" />
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="row" *ngIf="next2">
+                            <div class="col-lg-3"></div>
+
+                            <button (click)="addRowBuyer(1)" class="btn btn-default col-lg-2  ml-lg-4">
+                                Add Custumer
+                            </button>
+                            <button (click)="addRowBuyer(2)" class="btn btn-default col-lg-2  ml-lg-4">
+                                Add Entreprise
+                            </button>
+                            <div class="col-lg-3"></div>
+                        </div>
+
+                    </div>
+                    <div class="row m-5 text-center">
+                        <div class="col-3"></div>
+                        <button style="margin-left: 100px !important;" type="button"
+                            class="btn btn-warning btn-round  col-sm-2 col-lg-2" *ngIf="!next2 && !next"
+                            (click)="nextStep(event)">seller</button>
+                        <button type="button" class="btn btn-warning btn-round col-sm-2 col-lg-2" *ngIf="!next2 && next"
+                            (click)="backStep(event)"> Back</button>
+                        <button type="button" class="btn btn-warning btn-round col-sm-2 col-lg-2" *ngIf="next2 && next"
+                            (click)="backStep2(event)">Back </button>
+                        <button type="button" class="btn btn-warning btn-round col-sm-2 col-lg-2 ml-lg-5 "
+                            *ngIf="next && !next2" (click)="nextStep2(event)">buyer </button>
+                        <button (click)="saveContract()" *ngIf="next && next2"
+                            class="btn btn-warning btn-round col-sm-2 col-lg-2 ml-lg-5">Submit </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

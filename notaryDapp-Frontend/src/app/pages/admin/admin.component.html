@@ -1,0 +1,142 @@
+<div>
+    <div class="page-header page-header-small" data-parallax="true">
+        <div class="filter"></div>
+    </div>
+    <div class="section profile-content">
+        <div class="container">
+            <div class="owner">
+
+                <div class="name">
+                    <h4 class="title">ADMIN<br /></h4>
+                    <h6 class="description">ADMIN</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, nisi.</p>
+                    <br />
+                    <button class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+
+                    <h1>Wallet Settings</h1>
+                    <br />
+                    <div class="row">
+                        <input [(ngModel)]="privateKey" type="text" class="col-lg-8 ml-5 form-control"
+                            placeholder="Wallet" />
+                        <button (click)="editewallet()" class="btn btn-warning col-lg-2  ml-4"> Edit</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="card col-3 text-center py-5 pb-5">
+        <h3>{{nbr}} + membre</h3>
+    </div>
+    <div class="card col-3 text-center ml-5 py-5 pb-5">
+        <h3>{{nbr}} + membre</h3>
+    </div>
+    <div class="col-2"></div>
+</div>
+<div class="row text-center">
+    <div class="col-4"></div>
+    <h3 class="col-4">user management</h3>
+</div>
+<br>
+<div class="form-group row" *ngIf="!forUpdate">
+    <div class="col-lg-1"></div>
+    <label class="col-lg-1 mt-sm-2 col-form-label text-center">Add User </label>
+    <input type="text" [(ngModel)]="UserForm.name" class="col-lg-2 ml-lg-3 mt-sm-2 form-control"
+        placeholder="Full Name" />
+    <input type="text" [(ngModel)]="UserForm.username" class="col-lg-2 ml-lg-2 mt-sm-2 form-control"
+        placeholder="Username(email)" />
+    <input type="text" [(ngModel)]="UserForm.password" class="col-lg-2 ml-lg-1 mt-sm-2 form-control"
+        placeholder="password" />
+    <select [(ngModel)]="UserForm.role[0].id" class="col-lg-2 ml-lg-1 mt-sm-2 form-control">
+        <option value="" [selected]="">--Choose the role--</option>
+        <option value="1">ADMIN</option>
+        <option value="2">NOTAIRE</option>
+    </select>
+    <input type="button" (click)="onSaveUser()" class="btn btn-default col-lg-1 ml-lg-2 mt-sm-2 " value="ADD">
+</div>
+<div class="form-group row" *ngIf="forUpdate">
+    <div class="col-lg-1"></div>
+    <label class="col-lg-1 mt-sm-2 col-form-label text-center">Add User </label>
+    <input type="text" [(ngModel)]="UserForm.name" class="col-lg-2 ml-lg-3 mt-sm-2 form-control"
+        placeholder="Full Name" />
+    <input type="text" [(ngModel)]="UserForm.username" class="col-lg-2 ml-lg-2 mt-sm-2 form-control"
+        placeholder="Username(email)" />
+    <input type="text" [(ngModel)]="UserForm.password" class="col-lg-2 ml-lg-1 mt-sm-2 form-control"
+        placeholder="password" />
+    <select [(ngModel)]="UserForm.role[0].id" class="col-lg-2 ml-lg-1 mt-sm-2 form-control">
+        <option value="" [selected]="">--Choose the role--</option>
+        <option value="1">ADMIN</option>
+        <option value="2">NOTAIRE</option>
+    </select>
+    <button (click)="updateUser(UserForm.id)" class="btn btn-default col-lg-1 ml-lg-2 mt-sm-2 ">Edite</button>
+</div>
+<div class="row">
+
+</div>
+<div class="row">
+    <div class="col-lg-1 "></div>
+    <div class="col-lg-10 m-5">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">username</th>
+                    <th scope="col">Role</th>
+                    <th></th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; index as i">
+                    <th scope="row">{{ user.id }}</th>
+                    <td>
+
+                        {{ user.name }}
+                    </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.roles[0].name }}</td>
+                    <td><button class="btn btn-danger" (click)="onDeleteUser(user.id)">delete</button></td>
+                    <td><button class="btn btn-warning" (click)="DetailsUser(user.username)"> Edit</button></td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+<div>
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <p class="modal-title">ERR MESSAGE</p>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body mb-4  text-center text-danger">
+            <h4>{{messageErr}}</h4>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="logOut()"
+                (click)="modal.close('Close click')">Close</button>
+        </div>
+    </ng-template>
+</div>

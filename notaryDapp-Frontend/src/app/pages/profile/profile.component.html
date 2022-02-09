@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../../../assets/img/bg.png');">
+        <div class="filter"></div>
+    </div>
+    <div class="section profile-content">
+        <div class="container">
+            <div class="owner">
+                <div class="avatar">
+                    <img src="https://st2.depositphotos.com/3169803/7666/v/600/depositphotos_76669763-stock-illustration-template-vector-logo-for-legal.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                </div>
+                <div class="name">
+                    <h4 class="title">{{username}}<br /></h4>
+                    <h6 class="description">Notary</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, nisi.</p>
+                    <br />
+                    <button class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</button>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                      <p class="modal-title">ERR MESSAGE</p>
+                      <button type="button" class="close" aria-label="Close"  (click)="logOut()" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body mb-4  text-center text-danger">
+                      <h4>{{messageErr}}</h4>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                  </ng-template>
+                </div>
+                
+           <div class="container text-center">
+
+            <div class="tim-title">
+              <h2>Welcome Mr. {{username}}</h2>
+          </div>
+          
+           </div>
+            
+           <div >
+
+            
+           </div>
+          
+           
+        </div>
+        
+        </div>
+    </div>
+    
+

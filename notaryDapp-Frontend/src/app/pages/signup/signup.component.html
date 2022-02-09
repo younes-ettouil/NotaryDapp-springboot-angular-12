@@ -1,0 +1,61 @@
+<div >
+    <ng-template #content let-modal   >
+
+       
+           
+         
+
+        <div class="modal-body text-center font-weight-bold " *ngIf="isLoginFailed">
+           
+          <h2 class="mb-5 text-danger"  >{{errorMessage}}</h2>
+          <div class="text-center">
+            <button type="button" class="btn btn-dark" (click)="modal.close('Close click')">Close</button>
+          </div>
+        </div>
+        
+      </ng-template>
+</div>
+<div class="wrapper">
+    <div class="page-header" style="background-image: url('https://www.coe.int/documents/22298481/25101694/Montengrocodeofethics.JPG/6793ade8-d324-1a18-0d8f-9d9b6be06620');">
+        <div class="filter"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
+                      <div class="card card-register" >
+                          <h3 class="title">Welcome</h3>
+                         
+                          <div class="register-form" > 
+                              <label>Email</label>
+                              <div class="input-group form-group-no-border" [ngClass]="{'input-group-focus':focus===true}">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                      <i class="nc-icon nc-email-85"></i>
+                                  </span>
+                                </div>
+
+                                  <input type="text" class="form-control" [(ngModel)]="form.username" placeholder="Email" (focus)="focus=true" (blur)="focus=false" >
+                              </div>
+
+                              <label>Password</label>
+                              <div class="input-group form-group-no-border" [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                      <i class="nc-icon nc-key-25"></i>
+                                  </span>
+                                </div>
+                                  <input type="password" class="form-control" [(ngModel)]="form.password"  placeholder="Password" (focus)="focus1=true" (blur)="focus1=false" >
+                              </div>
+                              <input type="submit" (click)="onSubmit()" (click)="openVerticallyCentered(content)"  class="btn btn-danger btn-block btn-round" value="Login">
+                          </div>
+                          <div class="forgot">
+                              <a href="#" class="btn btn-link btn-danger">Forgot password?</a>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="footer register-footer text-center">
+                    <h6>&copy;{{test | date: 'yyyy'}}, <i class="fa fa-smile-o"></i> NotaryDapp</h6>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,177 @@
+<div class="wrapper">
+    <div class="page-header page-header-xs" data-parallax="true"
+        style="background-image: url('../../../assets/img/bg.png');">
+        <div class="filter"></div>
+    </div>
+    <div class="section profile-content">
+        <div class="container">
+            <div class="owner">
+                <div class="avatar">
+                    <img src="https://st2.depositphotos.com/3169803/7666/v/600/depositphotos_76669763-stock-illustration-template-vector-logo-for-legal.jpg"
+                        alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                </div>
+            </div>
+            <br />
+            <div>
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <p class="modal-title">ERR MESSAGE</p>
+                        <button type="button" class="close" aria-label="Close" (click)="logOut()"
+                            (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mb-4  text-center text-danger">
+                        <h4>{{messageErr}}</h4>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+            </div>
+
+            <div *ngIf="!showDetails " class="container text-center">
+                <div class="tim-title">
+                    <h2>Contrats List</h2>
+                </div>
+            </div>
+            <div *ngIf="showDetails" class="container text-center">
+                <div class="tim-title">
+                    <h2>Contract Details </h2>
+                </div>
+            </div>
+            <div class="row text-center" >
+                <div class="col-lg-2"></div>
+                <label class="col-lg-1 col-form-label ml-5">From</label>
+                <input type="date" [(ngModel)]="fromDate"  class="col-lg-3 form-control" placeholder="Default" />
+                <button type="button" class="btn btn-warning col-lg-2 ml-lg-5 " (click)="getContractsFrom(fromDate)">Search</button>
+             </div>
+             <div class="text-center m-5" *ngIf="isNull" >
+                <h1 class="text-danger">There are no Contracts from this date !</h1>
+               </div>
+
+            <div *ngIf="!showDetails">
+
+             <!-- add List Here -->
+           
+             <br><br>
+             <div class=" text-center">
+                <h3>Contracts From Date :{{fromDate}}</h3>
+                <br>
+                <br>
+             </div>
+             <div class="list-group" style=" overflow: auto;height: 650px !important;">
+                
+                <ul >
+                    <li style="list-style: none;" *ngFor="let contract of ListFrom; let i = index; let last = last"
+                    [attr.data-index]="i">
+                    <a (click)="dtailsContrat(contract.id)" style="cursor: pointer;" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-90 justify-content-between">
+                          <h3 class="mb-1">{{contract.property.type}} <small>{{"-" +contract.property.conservationNumber+"-"}}</small> </h3>
+                          
+                          <small class="text-muted">{{contract.date}}</small>
+                        </div>
+                        <h5 class="mb-1">{{contract.id}}</h5>
+                        <p class="text-muted">{{contract.property.address.address+", "+ contract.property.address.city}}</p>
+                      </a>
+                    </li>
+                </ul>
+             
+              
+              
+              </div>
+              
+            </div>
+            
+            <div  *ngIf="showDetails" class="card">
+                <div class=" row ml-5 mr-5 mt-5 mb-3">
+                    <h3>Contract N°:&nbsp;&nbsp; {{contractDetails.id}}</h3>
+                </div>
+                <div class=" row ml-5 mr-5" >
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <h6 class="col-lg-6"> Type of Contract :</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.type}}</h6>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-lg-6"> Type of property :</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.property.type}}</h6>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-lg-6"> Price:</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.price}}</h6>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-lg-6"> Payment Method  :</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.paymentMethod}}</h6>
+                        </div>
+                       
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <h6 class="col-lg-6"> Conservation Number :</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.property.conservationNumber}}</h6>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-lg-6"> Address of Property :</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.property.address.address}},&nbsp;{{contractDetails.property.address.city}},&nbsp;{{contractDetails.property.address.country}}</h6>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-lg-6"> surface:</h6>
+                            <h6 for="" class="col-lg-6"> {{contractDetails.property.surface}}</h6>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-lg-6"> Taxes :</h6>
+                            <h6 *ngIf="contractDetails.property.taxesFree" class="col-lg-6"> Free </h6>
+                            <h6 *ngIf="!contractDetails.property.taxesFree" class="col-lg-6"> Not Free</h6>
+                        </div>
+                     
+                    </div>
+                </div>
+                <div class="row">
+                   
+                    <h5 class="col-lg-5 ml-5 mr-5 mt-5 mb-3"> sellers Informations</h5>
+                    <h5 class="col-lg-5 ml-3  mr-5 mt-5 mb-3" > Buyers Informations</h5>
+                </div>
+                <div class=" row ml-5 mr-5" >
+                    
+                    <!-- Seller info -->
+                 
+                       <ul class="col-lg-6">
+                           <li class="row" style="list-style: none;" *ngFor="let seller of contractDetails.sellers">
+                            <h6 class="col-lg-5"> Wallet of Seller:</h6>
+                            <h6 for="" class="col-lg-7"> {{seller.wallet}}</h6>
+                            <h6 class="col-lg-5"> Phone of Seller:</h6>
+                            <h6 for="" class="col-lg-7"> {{seller.phone}}</h6>
+                           </li>
+                       </ul>
+                       
+                  
+                    <!-- buyer info -->
+                   
+                    <ul class="col-lg-6">
+                        <li class="row" style="list-style: none;" *ngFor="let buyer of contractDetails.buyers">
+                            <h6 class="col-lg-5"> Wallet of buyer:</h6>
+                            <h6 for="" class="col-lg-7"> {{buyer.wallet}}</h6>
+                            <h6 class="col-lg-5"> Phone of buyer:</h6>
+                            <h6 for="" class="col-lg-7"> {{buyer.phone}}</h6>
+                        </li>
+                    </ul>
+                </div>
+
+                
+
+
+
+
+                <div class="row ml-5 mt-5 my-5 ">
+                    <div class="col-5"></div>
+                    <div class="col-4"></div>
+                    <button type="button" class="btn btn-warning col-2" (click)="showDetails=false">Back to List </button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
